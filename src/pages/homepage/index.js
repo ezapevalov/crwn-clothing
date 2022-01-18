@@ -1,11 +1,13 @@
 import React from 'react';
+import { Route } from 'react-router-dom'
+
 import './homepage.styles.scss'
-import ProductTile from '../../components/product/tile'
+import CategoryTile from '../../components/category/tile'
 
 function HomePage() {
 	return (
 	  <div className="homepage">
-		  <ProductTile/>
+		  <CategoryTile/>
 	  </div>
 	);
 }
