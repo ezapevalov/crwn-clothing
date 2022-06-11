@@ -1,13 +1,14 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 import './item.scss'
 
 function CategoryItem(props) {
-	const { title, imageUrl, categoryPageUrl, size, history } = props;
+	const { title, imageUrl, categoryPageUrl, size } = props;
+	let navigate  = useNavigate();
 	
 	function handleCategoryItemClick() {
-		history.push(categoryPageUrl);
+		navigate(categoryPageUrl, { replace: true });
 	}
 	
 	return (
@@ -21,4 +22,4 @@ function CategoryItem(props) {
 	);
 }
 
-export default withRouter(CategoryItem)
+export default CategoryItem
