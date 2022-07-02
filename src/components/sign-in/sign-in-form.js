@@ -21,11 +21,9 @@ const SignInForm = () => {
 		// TODO validate
 		
 		try {
-			const response = await signInAuthUserWithEmailAndPassword(email, pass);
-			console.log(response);
+			await signInAuthUserWithEmailAndPassword(email, pass);
 			
 			clearSignUpForm();
-			alert("user logged");
 		} catch (error) {
 			
 			if(error.code === 'auth/wrong-password') {

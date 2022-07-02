@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { getRedirectResult } from 'firebase/auth';
 import {
 	auth,
@@ -10,17 +10,22 @@ import SignInForm from '../../components/sign-in/sign-in-form';
 
 function SignIn() {
 	
-	useEffect(async () => {
+	const checkUserFromRedirectResult = async () => {
 		const firebaseRedirectResult = await getRedirectResult(auth);
 		
 		if(firebaseRedirectResult) {
-			const userDocRef = await createUserDocumentFromAuth(firebaseRedirectResult.user);
+			await createUserDocumentFromAuth(firebaseRedirectResult.user);
 		}
+	};
+	
+	useEffect(() => {
+		checkUserFromRedirectResult();
 	}, []);
 	
 	const loginGoogleUserViaPopup = async () => {
 		const {user} = await signInWithGooglePopup();
-		const userDocRef = await createUserDocumentFromAuth(user);
+		
+		await createUserDocumentFromAuth(user);
 	};
 	
 	return (
