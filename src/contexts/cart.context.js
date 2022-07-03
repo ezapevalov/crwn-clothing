@@ -4,7 +4,10 @@ export const CartContext = createContext({
 	isCartOpen: null,
 	setIsCartOpen: () => {},
 	cartItems: [],
-	addItemToCart: () => {}
+	addItemToCart: () => {},
+	incrementProductQuantity: () => {},
+	decrementProductQuantity: () => {},
+	removeProduct: () => {}
 });
 
 export const CartProvider = ({ children }) => {
@@ -16,7 +19,48 @@ export const CartProvider = ({ children }) => {
 		
 		return orders.length ? Math.max(...orders) : 0;
 	};
-	
+	const incrementProductQuantity = productID => {
+		setCartItems(productsInCart => {
+			const product = productsInCart.find(productInCart => productInCart.id === productID);
+			
+			productsInCart = productsInCart.filter(productInCart => productInCart.id !== productID);
+			
+			return [
+				...productsInCart,
+				{
+					...product,
+					quantity: product.quantity + 1
+				}
+			];
+		})
+	};
+	const decrementProductQuantity = productID => {
+		setCartItems(productsInCart => {
+			const product = productsInCart.find(productInCart => productInCart.id === productID);
+			const decrementedQuantity = product.quantity - 1;
+			
+			if(decrementedQuantity === 0) return productsInCart; // do nothing
+			
+			productsInCart = productsInCart.filter(productInCart => productInCart.id !== productID);
+			
+			return [
+				...productsInCart,
+				{
+					...product,
+					quantity: decrementedQuantity
+				}
+			];
+		})
+	};
+	const removeProduct = productID => {
+		setCartItems(productsInCart => {
+			const filteredProducts = productsInCart.filter(productInCart => productInCart.id !== productID);
+			
+			return [
+				...filteredProducts
+			];
+		})
+	};
 	const addItemToCart = (productToAdd) => {
 			setCartItems(productsInCart => {
 				const foundProductInCart = productsInCart.find(productInCart => productInCart.id === productToAdd.id);
@@ -34,12 +78,20 @@ export const CartProvider = ({ children }) => {
 						order: getMaxCartProductOrder() + 1
 					};
 					
-					setCartItems([...productsInCart, newProductToAdd]);
+					return [...productsInCart, newProductToAdd];
 				}
 			})
 	};
 	
-	const value = { isCartOpen, setIsCartOpen, cartItems, addItemToCart };
+	const value = {
+		isCartOpen,
+		setIsCartOpen,
+		cartItems,
+		addItemToCart,
+		incrementProductQuantity,
+		decrementProductQuantity,
+		removeProduct
+	};
 	
 	return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 };
