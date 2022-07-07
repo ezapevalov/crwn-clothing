@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import { UserProvider } from './contexts/user.context'
-import { ProductsProvider } from './contexts/products.context'
+import { CategoriesProvider } from './contexts/categories.context'
 import { CartProvider } from './contexts/cart.context'
 // import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 // import reportWebVitals from './reportWebVitals';
@@ -14,13 +14,13 @@ ReactDOM.render(
       <BrowserRouter>
 	      
 	        <UserProvider>
-		      <ProductsProvider>
+		      <CategoriesProvider>
 		      <CartProvider>
 			      
 		        <App />
 			      
 		      </CartProvider>
-		      </ProductsProvider>
+		      </CategoriesProvider>
 	        </UserProvider>
 	      
       </BrowserRouter>
