@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-
+import React  from 'react';
+import { useSelector } from 'react-redux';
 import './shop_page.styles.scss'
-import { CategoriesContext } from "../../contexts/categories.context";
 import ProductCard from "../../components/products/product-card";
+import {selectCategoriesMap} from '../../store/categories/categories.selector'
+import { Link } from 'react-router-dom';
 
 function ShopPage() {
-	const { categoriesMap } = useContext(CategoriesContext);
+	const categoriesMap = useSelector(selectCategoriesMap);
 	
 	return (
 	  <div className="shop-page">
@@ -15,7 +16,7 @@ function ShopPage() {
 		  	Object.keys(categoriesMap).map(categoryTitle => (
 		  	  <React.Fragment key={categoryTitle}>
 					  <h2>
-						  <span className="category-title">{categoryTitle.toUpperCase()}</span>
+						  <Link to={categoryTitle} className="category-title">{categoryTitle.toUpperCase()}</Link>
 						</h2>
 					  <div className="products-container">
 						  {categoriesMap[categoryTitle]

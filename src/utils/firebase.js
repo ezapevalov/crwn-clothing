@@ -82,7 +82,6 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 };
 export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener = callback => onAuthStateChanged(auth, callback);
-
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
 	const collectionRef = collection(db, collectionKey);
 	const batch = writeBatch(db);
@@ -95,7 +94,6 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 	
 	await batch.commit();
 	
-	console.log('batch committed');
 };
 export const getCategoriesAndDocuments = async () => {
 	const collectionRef = collection(db, 'categories');
@@ -103,11 +101,5 @@ export const getCategoriesAndDocuments = async () => {
 	
 	const querySnapshot = await getDocs(q);
 	
-	return querySnapshot.docs.reduce((accumulator, docSnapshot) => {
-		const {title, items} = docSnapshot.data();
-		
-		accumulator[title.toLowerCase()] = items;
-		
-		return accumulator;
-	}, {});
+	return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 };
