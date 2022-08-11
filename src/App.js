@@ -12,11 +12,10 @@ import SignUp from './pages/sign-up'
 import Checkout from './pages/checkout'
 import {
 	createUserDocumentFromAuth,
-	getCategoriesAndDocuments,
 	onAuthStateChangedListener
 } from "./utils/firebase";
 import { setCurrentUser } from './store/user/user.action'
-import { setCategories } from "./store/categories/categories.action";
+import { fetchCategoriesAsync } from "./store/categories/categories.action"
 
 function App() {
   const dispatch = useDispatch();
@@ -31,15 +30,7 @@ function App() {
 	
 	// Get Categories with products
 	useEffect(() => {
-		const getCategoriesMap = async () => {
-			const categoriesArray = await getCategoriesAndDocuments();
-			
-			console.log("categories response:", categoriesArray);
-			
-			dispatch(setCategories(categoriesArray));
-		};
-		
-		getCategoriesMap();
+			dispatch(fetchCategoriesAsync());
 	}, [dispatch]);
   
   return (

@@ -2,11 +2,18 @@ import React  from 'react';
 import { useSelector } from 'react-redux';
 import './shop_page.styles.scss'
 import ProductCard from "../../components/products/product-card";
-import {selectCategoriesMap} from '../../store/categories/categories.selector'
+import {
+	selectCategoriesIsLoading,
+	selectCategoriesMap
+} from '../../store/categories/categories.selector'
 import { Link } from 'react-router-dom';
+import SpinnerCircleGrey from "../../components/spinner/circle-grey";
 
 function ShopPage() {
+	const categoriesIsLoading = useSelector(selectCategoriesIsLoading);
 	const categoriesMap = useSelector(selectCategoriesMap);
+	
+	if(categoriesIsLoading) return <SpinnerCircleGrey />;
 	
 	return (
 	  <div className="shop-page">
